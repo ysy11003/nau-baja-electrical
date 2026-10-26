@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<!--
+  =====================================================================
+  index.html —— 网站的"骨架"（结构 / 内容）
+  ---------------------------------------------------------------------
+  一个网页通常由三种文件分工合作：
+    1. HTML（本文件）：写"页面上有什么"——标题、段落、图片、按钮。
+    2. CSS（style.css）：写"长什么样"——颜色、字体、间距、布局。
+    3. JavaScript（script.js）：写"会做什么"——点击、动画、计算。
+
+  这是"完整版"：可以直接放到任何网站服务器（比如 GitHub Pages）上。
+  <head> 里放给浏览器看的信息（编码、标题、样式表），访客看不到；
+  <body> 里放页面真正显示的内容。
+
+  HTML 的基本语法：<标签名 属性="值">内容</标签名>
+  例如 <a href="https://nau.edu">NAU</a> 是一个链接：
+    a     = 标签名（anchor，链接）
+    href  = 属性（链接要去哪）
+    NAU   = 显示出来的文字
+  =====================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- viewport：让手机按设备宽度显示页面，而不是缩成一个小电脑屏 -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- 浏览器标签页上显示的名字 -->
+<title>NAU Baja SAE Electrical System</title>
+<meta name="description" content="Electrical system design for the NAU Lumberjack Motorsports Baja SAE 2026–27 vehicle.">
+
+<!-- 从 Google Fonts 加载三种字体：标题用 Barlow Condensed，正文用 IBM Plex Sans，数据/标签用 IBM Plex Mono -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<!-- 引入我们自己写的样式表。href 是相对路径：和 index.html 在同一个文件夹 -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- =================================================================
+     1. 顶部导航栏 <header>
+     header / nav / main / section / footer 都是"语义化标签"：
+     它们和 <div> 一样只是个盒子，但名字告诉浏览器和读屏软件这块是干什么的。
+     ================================================================= -->
+<header class="site-header">
+  <div class="wrap nav-row">
+    <!-- href="#top" 表示跳到页面里 id="top" 的元素 -->
+    <a class="brand" href="#top">
+      <img src="img/logo.webp" alt="" width="36" height="36">
+      <span>NAU Baja <b>Electrical</b></span>
+    </a>
+
+    <!-- 手机上才显示的"菜单"按钮。aria-expanded 告诉读屏软件菜单是开还是关，JS 会改它 -->
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="siteNav">Menu</button>
+
+    <nav id="siteNav" class="site-nav" aria-label="Sections">
+      <a href="#overview">Overview</a>
+      <a href="#system">System map</a>
+      <a href="#subsystems">Subsystems</a>
+      <a href="#figures">Schematics</a>
+      <a href="#rules">Rules</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#team">Team</a>
+    </nav>
+  </div>
+</header>
+
+
+<!-- <main> 包住页面的主要内容，一个页面只放一个 -->
+<main id="top">
+
+  <!-- ===============================================================
+       2. 首屏 Hero：项目名称 + 一句话介绍 + 关键参数
+       =============================================================== -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <p class="eyebrow">Lumberjack Motorsports · Baja SAE 2026–27 · EE476C</p>
+        <h1>Electrical<br>System</h1>
+        <p class="lead">
+          The wiring, power distribution, kill switches, brake light and digital dashboard
+          for Northern Arizona University's single-seat off-road vehicle. Built to survive
+          the endurance race and to be easy to inspect, troubleshoot and repair in the pits.
+        </p>
+      </div>
+      <img class="hero-logo" src="img/logo.webp" alt="NAU Lumberjack Motorsports Baja SAE logo" width="240" height="240">
+    </div>
+
+    <!-- <dl> 是"定义列表"：<dt> 是名称，<dd> 是对应的值。很适合"参数: 数值"这种内容 -->
+    <div class="wrap">
+      <dl class="spec-strip">
+        <div><dt>Battery</dt><dd>12 V <small>AGM</small></dd></div>
+        <div><dt>Primary fuse</dt><dd>25 A</dd></div>
+        <div><dt>Fused circuits</dt><dd>3</dd></div>
+        <div><dt>Kill switches</dt><dd>2</dd></div>
+        <div><dt>Safety devices</dt><dd>≥ 11 V</dd></div>
+      </dl>
+    </div>
+  </section>
+
+
+  <!-- ===============================================================
+       3. Overview：项目介绍 + 目标（内容来自期中报告）
+       =============================================================== -->
+  <section id="overview" class="section">
+    <div class="wrap two-col">
+      <div>
+        <p class="eyebrow">Overview</p>
+        <h2>Why the electrical system matters</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Baja SAE is an international competition run by SAE International in which engineering
+          students design and build a single-seat off-road vehicle that must endure harsh terrain
+          while meeting the Baja SAE rules. The electrical system supports the brake light, the
+          engine kill switches and the digital display, so it has to be durable, serviceable and
+          properly integrated into the vehicle.
+        </p>
+        <p>
+          Our objective is a safe, reliable and serviceable system: a main wiring harness, power
+          distribution with circuit protection, engine kill switches, a brake light, and the
+          connections between them. The design keeps weight down, reduces failure points, and leaves
+          room for a digital dashboard, more sensors and data logging.
+        </p>
+        <p>
+          Sizing starts from the basics: Ohm's law and the power equation give each load's current,
+          which sets wire gauge and fuse ratings while accounting for voltage drop, wire resistance
+          and grounding.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===============================================================
+       4. 交互式系统图 System map（整个网站的"亮点"）
+       - 图本身用 SVG 画（SVG = 用代码描述的矢量图，放大不会糊）
+       - 每根导线都有 data-when 属性，说明"什么条件下这根线通电"
+       - script.js 根据开关状态，给通电的线加上 is-live 类，CSS 就把它点亮
+       =============================================================== -->
+  <section id="system" class="section section-alt">
+    <div class="wrap">
+      <p class="eyebrow">System map</p>
+      <h2>Press the brake. Hit a kill switch. Watch the circuits.</h2>
+      <p class="section-lead">
+        Two circuits share the chassis but not their wiring. The engine kill circuit is kept separate
+        from the main harness so that shutting off the engine never cuts power to the brake light,
+        as Baja SAE rules require. Select any component for details.
+      </p>
+
+      <div class="sim">
+        <!-- 左侧：控制面板。<button> 天生可以用键盘操作，所以开关用按钮做 -->
+        <div class="sim-controls" role="group" aria-label="Simulator inputs">
+          <!-- aria-pressed="false" 表示这是一个"可以按下/弹起"的开关按钮 -->
+          <button class="toggle" id="tBrake" aria-pressed="false">
+            <span class="toggle-led" aria-hidden="true"></span>
+            <span><b>Brake pedal</b><small>Hydraulic pressure on SW-1 / SW-2</small></span>
+          </button>
+          <button class="toggle toggle-kill" id="tDriver" aria-pressed="false">
+            <span class="toggle-led" aria-hidden="true"></span>
+            <span><b>Driver kill switch</b><small>Cockpit, within driver's reach</small></span>
+          </button>
+          <button class="toggle toggle-kill" id="tExternal" aria-pressed="false">
+            <span class="toggle-led" aria-hidden="true"></span>
+            <span><b>External kill switch</b><small>Rear exterior of the chassis</small></span>
+          </button>
+
+          <!-- 模拟仪表盘读数。aria-live="polite" 让读屏软件在数字变化时念出来 -->
+          <div class="readout" aria-live="polite">
+            <div class="readout-row"><span>ENGINE</span><strong id="rEngine">RUNNING</strong></div>
+            <div class="readout-row"><span>RPM</span><strong id="rRpm">1,800</strong></div>
+            <div class="readout-row"><span>BRAKE LIGHT</span><strong id="rBrake">OFF</strong></div>
+            <p class="readout-note" id="rNote">Simulated values for illustration.</p>
+          </div>
+        </div>
+
+        <!-- 右侧：系统图。外面包一层 .diagram-scroll，手机屏幕窄时可以左右滑动 -->
+        <div class="diagram-scroll">
+          <!-- viewBox="0 0 960 460" 定义了画布坐标：宽 960、高 460 个单位。
+               之后所有 x / y 坐标都在这个坐标系里，SVG 会自动缩放到实际宽度 -->
+          <svg class="diagram" viewBox="0 0 960 460" role="img" aria-labelledby="diagramTitle">
+            <title id="diagramTitle">Block diagram of the main wiring harness and the separate engine kill circuit</title>
+
+            <!-- 区域标签 -->
+            <text class="zone-label" x="20" y="28">MAIN WIRING HARNESS · 12 V</text>
+            <text class="zone-label" x="20" y="358">ENGINE KILL CIRCUIT · ELECTRICALLY ISOLATED</text>
+            <line class="zone-divider" x1="20" y1="332" x2="940" y2="332"></line>
+
+            <!-- ---------- 导线（先画线，再画方框，方框会盖在线的端点上） ----------
+                 <path d="M x y H x2"> ：M = 移动到起点，H = 水平画到 x2，V = 垂直画到 y2 -->
+            <g class="wires">
+              <path class="wire" data-when="always" d="M140 102 H180"></path>
+              <path class="wire" data-when="always" d="M270 102 H310"></path>
+              <path class="wire" data-when="always" d="M430 80 H480"></path>
+              <path class="wire" data-when="brake"  d="M610 80 H660"></path>
+              <path class="wire" data-when="always" d="M430 140 H660"></path>
+              <path class="wire" data-when="brake"  d="M770 140 H850"></path>
+              <path class="wire" data-when="always" d="M430 222 H480"></path>
+              <path class="wire" data-when="always" d="M610 222 H660"></path>
+              <path class="wire" data-when="always" d="M770 222 H800"></path>
+              <path class="wire" data-when="always" d="M865 246 V276"></path>
+              <path class="wire signal" data-when="engine" d="M715 276 V246"></path>
+
+              <!-- 熄火电路：任意一个开关闭合，点火线就被接地 -->
+              <path class="wire kill" data-when="kill-any"      d="M170 410 H240"></path>
+              <path class="wire kill" data-when="kill-driver"   d="M240 410 V386 H300"></path>
+              <path class="wire kill" data-when="kill-external" d="M240 410 V434 H300"></path>
+              <path class="wire kill" data-when="kill-driver"   d="M450 386 H520 V410"></path>
+              <path class="wire kill" data-when="kill-external" d="M450 434 H520 V410"></path>
+              <path class="wire kill" data-when="kill-any"      d="M520 410 H572"></path>
+            </g>
+
+            <!-- 导线编号标签（来自原理图 Fig 2 上的线号） -->
+            <g class="wire-tags" aria-hidden="true">
+              <text x="160" y="94">W01</text>
+              <text x="290" y="94">W02</text>
+              <text x="455" y="72">P01-1</text>
+              <text x="635" y="72">SW01</text>
+              <text x="545" y="132">P01-2 · W04</text>
+              <text x="808" y="132">W07</text>
+              <text x="455" y="214">P01-3</text>
+            </g>
+
+            <!-- ---------- 元件方框 ----------
+                 每个 <g> 是一组图形（group）。class="node" 让它可被点击，
+                 data-part 存元件的名字，JS 用它去查详细介绍。
+                 tabindex="0" 让键盘 Tab 键也能选中它 -->
+            <g class="node" data-part="battery" tabindex="0" role="button" aria-label="12 V battery">
+              <rect x="20" y="70" width="120" height="64" rx="6"></rect>
+              <text class="node-title" x="80" y="98">12 V AGM</text>
+              <text class="node-sub" x="80" y="118">Battery</text>
+            </g>
+            <g class="node" data-part="fuse" tabindex="0" role="button" aria-label="25 amp primary fuse">
+              <rect x="180" y="84" width="90" height="36" rx="6"></rect>
+              <text class="node-title" x="225" y="107">25 A FUSE</text>
+            </g>
+            <g class="node" data-part="fusebox" tabindex="0" role="button" aria-label="Fuse distribution box">
+              <rect x="310" y="50" width="120" height="196" rx="6"></rect>
+              <text class="node-title" x="370" y="74">FUSE DIST.</text>
+              <text class="node-sub" x="370" y="92">BOX</text>
+              <text class="port" x="420" y="84">1</text>
+              <text class="port" x="420" y="144">2</text>
+              <text class="port" x="420" y="226">3</text>
+            </g>
+            <g class="node" data-part="switches" tabindex="0" role="button" aria-label="Brake pressure switches">
+              <rect x="480" y="56" width="130" height="48" rx="6"></rect>
+              <text class="node-title" x="545" y="77">PRESSURE SW.</text>
+              <text class="node-sub" x="545" y="95">SW-1 ∥ SW-2</text>
+            </g>
+            <g class="node" data-part="relay" tabindex="0" role="button" aria-label="Brake light relay">
+              <rect x="660" y="56" width="110" height="104" rx="6"></rect>
+              <text class="node-title" x="715" y="84">RELAY R1</text>
+              <text class="node-sub" x="715" y="104">N.O.</text>
+              <text class="node-sub" x="715" y="146">coil → contact</text>
+            </g>
+            <g class="node node-lamp" data-part="brakelight" data-when="brake" tabindex="0" role="button" aria-label="Brake light">
+              <circle cx="880" cy="140" r="30"></circle>
+              <path class="lamp-x" d="M859 119 L901 161 M901 119 L859 161"></path>
+              <text class="node-sub" x="880" y="186">BRAKE LIGHT</text>
+            </g>
+            <g class="node" data-part="buck" tabindex="0" role="button" aria-label="DC-DC buck converters">
+              <rect x="480" y="198" width="130" height="48" rx="6"></rect>
+              <text class="node-title" x="545" y="219">DC-DC × 2</text>
+              <text class="node-sub" x="545" y="237">12 V → 5 V</text>
+            </g>
+            <g class="node" data-part="esp32" tabindex="0" role="button" aria-label="ESP32-S3 microcontroller">
+              <rect x="660" y="198" width="110" height="48" rx="6"></rect>
+              <text class="node-title" x="715" y="219">ESP32-S3</text>
+              <text class="node-sub" x="715" y="237">counts pulses</text>
+            </g>
+            <g class="node" data-part="pi" tabindex="0" role="button" aria-label="Raspberry Pi 5">
+              <rect x="800" y="198" width="130" height="48" rx="6"></rect>
+              <text class="node-title" x="865" y="219">RASPBERRY PI 5</text>
+              <text class="node-sub" x="865" y="237">display logic</text>
+            </g>
+            <g class="node" data-part="hall" tabindex="0" role="button" aria-label="Hall-effect sensors">
+              <rect x="660" y="276" width="110" height="44" rx="6"></rect>
+              <text class="node-title" x="715" y="295">HALL × 2</text>
+              <text class="node-sub" x="715" y="311">wheel · engine</text>
+            </g>
+            <g class="node" data-part="nextion" tabindex="0" role="button" aria-label="Nextion LCD">
+              <rect x="800" y="276" width="130" height="44" rx="6"></rect>
+              <text class="node-title" x="865" y="295">NEXTION LCD</text>
+              <text class="node-sub" x="865" y="311">3.5 in</text>
+            </g>
+
+            <g class="node node-engine" data-part="ignition" tabindex="0" role="button" aria-label="Kohler CH440 ignition">
+              <rect x="20" y="382" width="150" height="56" rx="6"></rect>
+              <text class="node-title" x="95" y="406">KOHLER CH440</text>
+              <text class="node-sub" x="95" y="426">ignition kill lead</text>
+            </g>
+            <g class="node" data-part="driverKill" tabindex="0" role="button" aria-label="Driver kill switch">
+              <rect x="300" y="372" width="150" height="28" rx="6"></rect>
+              <text class="node-title" x="375" y="391">DRIVER KILL</text>
+            </g>
+            <g class="node" data-part="externalKill" tabindex="0" role="button" aria-label="External kill switch">
+              <rect x="300" y="420" width="150" height="28" rx="6"></rect>
+              <text class="node-title" x="375" y="439">EXTERNAL KILL</text>
+            </g>
+            <!-- 接地符号：三条越来越短的横线 -->
+            <g class="ground" aria-hidden="true">
+              <path d="M572 410 V422 M560 422 H584 M565 429 H579 M570 436 H574"></path>
+              <text class="node-sub" x="572" y="452">GND</text>
+            </g>
+            <text class="diagram-note" x="640" y="394">Either switch grounds the ignition.</text>
+            <text class="diagram-note" x="640" y="414">The engine stops; the brake light</text>
+            <text class="diagram-note" x="640" y="434">circuit never sees the change.</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 点击元件后，这里显示详细介绍（内容由 JS 填进来） -->
+      <aside class="part-detail" id="partDetail" aria-live="polite">
+        <p class="part-tag" id="pdTag">P01 · Power distribution</p>
+        <h3 id="pdName">Fuse distribution box</h3>
+        <p id="pdText">Select a component in the diagram to see what it does.</p>
+      </aside>
+    </div>
+  </section>
+
+
+  <!-- ===============================================================
+       5. 三个子系统（报告第 5 章 Activities Performed）
+       <article> 表示一块独立完整的内容
+       =============================================================== -->
+  <section id="subsystems" class="section">
+    <div class="wrap">
+      <p class="eyebrow">Subsystems</p>
+      <h2>What we have done so far</h2>
+
+      <div class="subsystems">
+        <article class="subsystem">
+          <p class="circuit-tag">P01-1 · P01-2</p>
+          <h3>Main wiring harness &amp; power distribution</h3>
+          <p>
+            A 12 V sealed lead-acid AGM battery feeds a 25 A primary fuse and a fuse distribution
+            block, which splits power into three separately fused circuits: the digital display,
+            the hydraulic brake pressure switches, and the relay / brake light.
+          </p>
+          <p>
+            When the footbrake builds pressure, a pressure switch closes and energizes a normally
+            open automotive relay, which switches power to the brake light.
+          </p>
+          <ul class="checklist">
+            <li class="done">Researched hydraulic brake pressure switches</li>
+            <li class="done">Selected relay and brake light</li>
+            <li class="done">Wiring diagram and wire sizing</li>
+            <li class="done">Battery type chosen per Baja SAE rules</li>
+            <li>Select the specific battery model</li>
+          </ul>
+        </article>
+
+        <article class="subsystem">
+          <p class="circuit-tag">Isolated circuit</p>
+          <h3>Engine kill switch system</h3>
+          <p>
+            Two Polaris kill switches are wired to the ignition kill lead of the Kohler CH440 engine.
+            One sits in the cockpit within the driver's reach; the other is on the rear exterior of
+            the chassis for track personnel.
+          </p>
+          <p>
+            Either switch can shut the engine down on its own, and the circuit runs separately from
+            the main harness so the brake light keeps working.
+          </p>
+          <ul class="checklist">
+            <li class="done">Reviewed kill switch rules and safety regulations</li>
+            <li class="done">Selected Polaris switches for the CH440</li>
+            <li class="done">Engine-only wiring schematic</li>
+            <li>Confirm switch specs and mounting</li>
+            <li>Install and test each switch independently</li>
+          </ul>
+        </article>
+
+        <article class="subsystem">
+          <p class="circuit-tag">P01-3</p>
+          <h3>Digital dashboard &amp; sensors</h3>
+          <p>
+            The dashboard shows two numbers: vehicle speed and engine RPM. Hall-effect sensors detect
+            wheel and engine rotation, an ESP32-S3 turns pulses into speed and RPM, a Raspberry Pi 5
+            handles the display information, and a Nextion LCD shows the result.
+          </p>
+          <p>
+            Two buck converters step the 12 V battery down for the display electronics.
+          </p>
+          <ul class="checklist">
+            <li class="done">Chose speed and RPM as display parameters</li>
+            <li class="done">Preliminary wiring schematic</li>
+            <li class="done">Draft dashboard interface</li>
+            <li>Finalize component models</li>
+            <li>Wiring and sensor tests</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="integration">
+        <h3>Next: system integration</h3>
+        <p>
+          Finalize schematics and confirm fuses, wire sizes and the rest of the parts list, then order
+          components and bench-test each subsystem. The brake light will be tested with the kill switches
+          active, the Hall sensors checked against known speeds, and communication confirmed between the
+          ESP32, Raspberry Pi, sensors and LCD.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===============================================================
+       6. 原理图画廊：点击缩略图，用 <dialog> 弹出大图
+       =============================================================== -->
+  <section id="figures" class="section section-alt">
+    <div class="wrap">
+      <p class="eyebrow">Schematics</p>
+      <h2>Preliminary drawings</h2>
+
+      <div class="gallery">
+        <!-- 每张图是一个 <figure>，里面的按钮被点击时打开大图。
+             data-full 存大图地址，data-caption 存说明文字 -->
+        <figure class="fig">
+          <button class="fig-btn" data-full="img/fig1-overall.png" data-caption="Fig. 1 — Overall schematic">
+            <img src="img/fig1-overall.png" alt="Overall schematic combining the dashboard circuit, brake light relay and fuse distribution" loading="lazy">
+          </button>
+          <figcaption><b>Fig. 1</b> Overall schematic</figcaption>
+        </figure>
+        <figure class="fig">
+          <button class="fig-btn" data-full="img/fig2-main-harness.png" data-caption="Fig. 2 — Main wiring harness schematic">
+            <img src="img/fig2-main-harness.png" alt="Main wiring harness schematic with battery, 25 A fuse, distribution box, pressure switches, relay and brake light" loading="lazy">
+          </button>
+          <figcaption><b>Fig. 2</b> Main wiring harness</figcaption>
+        </figure>
+        <figure class="fig">
+          <button class="fig-btn" data-full="img/fig3-kill-switch.png" data-caption="Fig. 3 — Kill switch diagram">
+            <img src="img/fig3-kill-switch.png" alt="Kill switch diagram: driver and external kill switches in parallel between the Kohler CH440 ignition and ground" loading="lazy">
+          </button>
+          <figcaption><b>Fig. 3</b> Kill switch circuit</figcaption>
+        </figure>
+        <figure class="fig">
+          <button class="fig-btn" data-full="img/fig4-dashboard.png" data-caption="Fig. 4 — Dashboard circuit schematic">
+            <img src="img/fig4-dashboard.png" alt="Dashboard circuit: buck converters, Nextion display, Raspberry Pi 5, ESP32-S3 and two Allegro Hall sensors" loading="lazy">
+          </button>
+          <figcaption><b>Fig. 4</b> Dashboard circuit</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- <dialog> 是浏览器自带的弹窗元素，JS 调用 showModal() 打开它 -->
+    <dialog class="lightbox" id="lightbox">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">Close</button>
+      <img id="lightboxImg" src="" alt="">
+      <p id="lightboxCaption"></p>
+    </dialog>
+  </section>
+
+
+  <!-- ===============================================================
+       7. 规则合规表 Rules：用 <table> 表格
+       <thead> 表头，<tbody> 表身，<tr> 一行，<th> 表头格，<td> 普通格
+       =============================================================== -->
+  <section id="rules" class="section">
+    <div class="wrap">
+      <p class="eyebrow">Standards</p>
+      <h2>Designed to the Baja SAE Rules 2027</h2>
+      <p class="section-lead">How each electrical requirement from the 2027 rulebook (Rev. A) is handled in the current design.</p>
+
+      <div class="table-scroll">
+        <table class="rules-table">
+          <thead>
+            <tr><th scope="col">Requirement</th><th scope="col">How we meet it</th><th scope="col">Status</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>At least two engine kill switches: one in the cockpit, one external</td>
+              <td>Driver and external Polaris switches on the CH440 ignition kill lead</td>
+              <td><span class="pill pill-ok">Designed</span></td>
+            </tr>
+            <tr>
+              <td>Each kill switch shuts the engine down</td>
+              <td>Switches in parallel; either one grounds the ignition</td>
+              <td><span class="pill pill-test">To test</span></td>
+            </tr>
+            <tr>
+              <td>Brake light controlled by hydraulic pressure switches</td>
+              <td>SW-1 and SW-2 drive a normally open relay that powers the lamp</td>
+              <td><span class="pill pill-ok">Designed</span></td>
+            </tr>
+            <tr>
+              <td>Brake light works regardless of kill switch state</td>
+              <td>Kill circuit is wired separately from the main harness</td>
+              <td><span class="pill pill-test">To test</span></td>
+            </tr>
+            <tr>
+              <td>Safety devices receive at least 11 V through the endurance event</td>
+              <td>AGM battery and wire sizing for voltage drop</td>
+              <td><span class="pill pill-wip">In progress</span></td>
+            </tr>
+            <tr>
+              <td>All power circuits have circuit protection</td>
+              <td>25 A primary fuse plus individually fused branches</td>
+              <td><span class="pill pill-ok">Designed</span></td>
+            </tr>
+            <tr>
+              <td>Wiring protected from heat, abrasion, chafing and shorts</td>
+              <td>Routing and mounting to be finalized with the mechanical team</td>
+              <td><span class="pill pill-wip">In progress</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===============================================================
+       8. 时间线 Schedule
+       <ol> 是"有序列表"——这里顺序有意义（按日期），所以用 ol 而不是 ul。
+       每个 <li> 的 data-date 存日期，JS 会和"今天"比较，
+       自动标成 done（已过）/ next（下一个）/ upcoming（之后）
+       =============================================================== -->
+  <section id="schedule" class="section section-alt">
+    <div class="wrap">
+      <p class="eyebrow">Schedule</p>
+      <h2>Fall 2026 deliverables</h2>
+      <p class="section-lead" id="scheduleSummary">This semester covers design, calculations, the parts list and test plans. Assembly and testing follow in spring.</p>
+
+      <ol class="timeline" id="timeline">
+        <li data-date="2026-09-17"><time datetime="2026-09-17">Sep 17</time><span>Midterm report</span></li>
+        <li data-date="2026-10-30"><time datetime="2026-10-30">Oct 30</time><span>Website</span></li>
+        <li data-date="2026-11-13"><time datetime="2026-11-13">Nov 13</time><span>Video</span></li>
+        <li data-date="2026-11-20"><time datetime="2026-11-20">Nov 20</time><span>Poster</span></li>
+        <li data-date="2026-12-04"><time datetime="2026-12-04">Dec 4</time><span>Final report</span></li>
+        <li data-date="2026-12-11"><time datetime="2026-12-11">Dec 11</time><span>Final presentation</span></li>
+      </ol>
+    </div>
+  </section>
+
+
+  <!-- ===============================================================
+       9. 团队 Team
+       =============================================================== -->
+  <section id="team" class="section">
+    <div class="wrap">
+      <p class="eyebrow">Team</p>
+      <h2>SAE Baja 26–27 electrical team</h2>
+      <ul class="team">
+        <li><span class="avatar" aria-hidden="true">KH</span><span>Kael Hopkins</span></li>
+        <li><span class="avatar" aria-hidden="true">AD</span><span>Ashley Deswood</span></li>
+        <li><span class="avatar" aria-hidden="true">SY</span><span>Shengyang (Simon) Yu</span></li>
+        <li><span class="avatar" aria-hidden="true">AH</span><span>Alejandro Herrera Samano</span></li>
+      </ul>
+    </div>
+  </section>
+
+
+  <!-- ===============================================================
+       10. 参考资料 References
+       target="_blank" 让链接在新标签页打开；
+       rel="noopener" 是安全习惯，防止新页面控制原页面
+       =============================================================== -->
+  <section id="references" class="section section-alt">
+    <div class="wrap">
+      <p class="eyebrow">References</p>
+      <ol class="refs">
+        <li>Allegro MicroSystems, “A1101–A1106: Continuous-Time Switch Family,” datasheet. <a href="https://www.allegromicro.com/-/media/files/datasheets/a110x-datasheet.ashx" target="_blank" rel="noopener">allegromicro.com</a></li>
+        <li>Espressif Systems, “ESP32-S3 Series Datasheet.” <a href="https://documentation.espressif.com/esp32_s3_datasheet_en.pdf" target="_blank" rel="noopener">espressif.com</a></li>
+        <li>Raspberry Pi Ltd., “Raspberry Pi 5 Product Brief.” <a href="https://datasheets.raspberrypi.com/rpi5/raspberry-pi-5-product-brief.pdf" target="_blank" rel="noopener">raspberrypi.com</a></li>
+        <li>ITEAD, “NX4832K035 – Nextion 3.5” Enhanced Series HMI Touch Display.” <a href="https://itead.cc/product/nx4832k035-nextion-3-5-enhanced-series-hmi-touch-display/" target="_blank" rel="noopener">itead.cc</a></li>
+        <li>SAE International, <i>Baja SAE Rules 2027</i>, Rev. A, 2026. <a href="https://www.bajasae.net/cdsweb/app/NewsItem.aspx?NewsItemID=7e8589b8-6671-47d8-bb34-fe0b0e5d6e3a" target="_blank" rel="noopener">bajasae.net</a></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+
+<!-- 页脚 -->
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Northern Arizona University · EE476C · Baja SAE 2026–27 Electrical System</p>
+  </div>
+</footer>
+
+<!-- 最后引入 JS。放在最底部，保证 JS 运行时上面的 HTML 元素都已经存在了 -->
+<script src="script.js"></script>
+</body>
+</html>
